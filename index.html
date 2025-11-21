@@ -55,11 +55,11 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body>
-  <div id="status">Tap “Open” when prompted, allow camera, then keep the QR in view.</div>
-  <button id="startBtn">Start AR</button>
+  <div id="status">Tap “Open” when prompted, allow camera, then keep the QR in view. If the camera is black, tap “Start AR”.</div>
+  <button id="startBtn" class="show">Start AR</button>
 
   <a-scene
-    mindar-image="imageTargetSrc: ./targets/qr.mind; autoStart: true; filterMinCF: 0.0001; filterBeta: 0.001"
+    mindar-image="imageTargetSrc: ./targets/targets.mind; autoStart: true; filterMinCF: 0.0001; filterBeta: 0.001"
     color-space="sRGB"
     renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true; precision: medium"
     vr-mode-ui="enabled: false"
@@ -92,8 +92,9 @@
       try {
         await sceneEl.systems["mindar-image-system"].start();
         startBtn.classList.remove("show");
+        document.getElementById("status").textContent = "Camera active. Keep the QR in view.";
       } catch (err) {
-        // Likely needs user gesture (iOS). Show button.
+        // Likely needs user gesture (iOS/Android). Show button.
         startBtn.classList.add("show");
       }
     };
